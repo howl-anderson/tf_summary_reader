@@ -28,7 +28,6 @@ def get_summary_data(summary_dir: str) -> pd.DataFrame:
     previous_time = end_time
 
     selected_ts = ts[start_time:end_time]
-    print("")
 
     return selected_ts
 
