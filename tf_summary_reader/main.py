@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 import sys
-import time
 
-from tf_summary_reader.get_summary_data import get_summary_data
+from tf_summary_reader.read_summary_data_periodically import read_summary_data_periodically
 
 summary_dir = sys.argv[1]
-time_interval_in_seconds = 10
 
-while True:
-    result = get_summary_data(summary_dir)
-    print(result)
-
-    time.sleep(time_interval_in_seconds)
+for result in read_summary_data_periodically(summary_dir):
+    for timestamp, item in result.iterrows():
+        keys = item.keys()
+        step = item["step"]
+        del item["step"]
+        for metric_name, metric_val in item.items():
+            print(timestamp, step, metric_name, metric_val)
